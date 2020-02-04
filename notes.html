@@ -27,10 +27,6 @@
       <div class="col-4 list-container">
         <div class="card" style="margin-top: 20px;">
           <ul class="list-group">
-            
-              <h4>note name</h4>
-              <p>text to display</p>
-            
           </ul>
         </div>
       </div>
@@ -64,11 +60,14 @@ $(".save-note").on("click", function(event) {
       for (var i = 0; i < data.length; i++) {
         console.log(data);
         if (data)
-        for (var i = 0; i < data.length; i++) {
-            var newDiv = '<h4>'+i+'</h4>'+ '<h4>Note title: '+data[i].name+'</h4>'+'<p>Note: '+data[i].text+'</p>'+'</br>';
+      {
+            var newDiv = '<h4>'+(i+1)+'</h4>'+ '<h4>Note title: '+data[i].name+' '+'<button id="i">Delete</button>'+'</h4>'+'<p>Note: '+data[i].text+'</p>'+'</br>';
             $(".list-group").append(newDiv);
+
           }
+          
         }
+        //function for delete --
       }
     );
 

@@ -1,5 +1,6 @@
 var express = require("express");
 var path = require("path");
+const fs = require('fs');
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -28,6 +29,11 @@ app.post("/api/notes", function(req, res){
   
     console.log(newNote);
     notes.push(newNote);
+    fs.writeFile('myjsonfile.json',JSON.stringify(notes), 'utf8', function(err) {
+        if (err) throw err;
+        console.log('complete');
+        }
+    );
       res.json(true);
     
   });
