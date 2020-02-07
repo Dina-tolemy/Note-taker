@@ -29,7 +29,7 @@ app.post("/api/notes", function(req, res){
   
     console.log(newNote);
     notes.push(newNote);
-    fs.writeFile('myjsonfile.json',JSON.stringify(notes), 'utf8', function(err) {
+    fs.writeFile('database.json',JSON.stringify(notes), 'utf8', function(err) {
         if (err) throw err;
         console.log('complete');
         }
