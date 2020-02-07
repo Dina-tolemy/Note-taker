@@ -42,48 +42,52 @@
   <script>
 
 
-$(".save-note").on("click", function(event) {
+    $(".save-note").on("click", function (event) {
       event.preventDefault();
       var newNote = {
+        id: $(".delButton").length+1,
         name: $(".note-title").val().trim(),
         text: $(".noteText").val().trim(),
       };
 
       $.post("/api/notes", newNote)
-        .then(function(data) {
+        .then(function (data) {
           console.log(data);
         });
 
-          var newDiv = '<h4>'+$(".note-title").val().trim()+' '+'<button id="i">Delete</button>'+'</h4>'+'<p>'+$(".noteText").val().trim()+'</p>'+'</br>';
-            $(".list-group").append(newDiv);
+
+      var newDiv = '<h3>' + $(".note-title").val().trim() + '</h4>' + '<p>' + $(".noteText").val().trim() + '</p>' + '<p>' + '<button class="delButton">Delete</button>' + '</p>' + '</br>';
+      $(".list-group").append(newDiv);
     });
-
-    $(".new-note").on("click", function(event) {
-      event.preventDefault();
-      $(".note-title").empty();
-      $(".noteText").empty();
-      });
-
 
     $.get("/api/notes/", function (data) {
       for (var i = 0; i < data.length; i++) {
         console.log(data);
-        if (data)
-      {
-        var deleteButton='<button id="i" class="delete">Delete</button>';
-
-            var newDiv = '<h4>'+(i+1)+'</h4>'+ '<h4>'+data[i].name+' '+deleteButton+'</h4>'+'<p>'+data[i].text+'</p>'+'</br>';
-            $(".list-group").append(newDiv);
-
-          }
-          
+        var deleteButton = '<button class="delButton">Delete</button>';
+        //deleteButton.attr("data-name",i);
+       
+        if (data) {
+          var newDiv = '<h3>' + data[i].name + ' ' + '</h3>' + '<p>' + data[i].text + '</p>' + '<p>' + deleteButton + '</p>' + '</br>';
+          $(".list-group").append(newDiv);
         }
-        //function for delete --
       }
-    );
 
-
-
+      $(".delButton").on("click", function (event) {
+          console.log('deleted clicked');
+          var newId=$(".delButton").length;
+          console.log(newId);
+         // var newId=$(this).attr("data-name")
+            $.post("/api/notes/:id",newId)
+            .then(function(data) {
+              console.log(data);
+              
+            });  
+          });
+          $.get("/api/notes/:id", function (data) {
+            console.log(data);
+          });
+    });
+    
 
   </script>
 </body>
